@@ -58,20 +58,20 @@ const CheckoutForm = () => {
             placeholder="Enter name"
             className="input input-bordered w-full block"
             onBlur={(e) => setName(e.target.value)}
-            // required
+            required
           />
           <input
             type="email"
             placeholder="Enter email"
             className="input input-bordered w-full block"
             onBlur={(e) => setEmail(e.target.value)}
-            // required
+            required
           />
           <textarea
             placeholder="Enter address"
             className="textarea textarea-bordered textarea-lg w-full block"
             onBlur={(e) => setAddress(e.target.value)}
-            // required
+            required
           />
         </div>
 
