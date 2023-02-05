@@ -18,14 +18,18 @@ const CheckoutForm = () => {
   const dispatch = useDispatch();
 
   const addUserDetails = () => {
-    dispatch({
-      type: "ADD_USER_DETAILS",
-      payload: {
-        name,
-        email,
-        address,
-      },
-    });
+    if (!name || !email || !address) {
+      window.alert("Enter information!");
+    } else {
+      dispatch({
+        type: "ADD_USER_DETAILS",
+        payload: {
+          name,
+          email,
+          address,
+        },
+      });
+    }
   };
 
   const handleVoucher = () => {
@@ -58,20 +62,17 @@ const CheckoutForm = () => {
             placeholder="Enter name"
             className="input input-bordered w-full block"
             onBlur={(e) => setName(e.target.value)}
-            required
           />
           <input
             type="email"
             placeholder="Enter email"
             className="input input-bordered w-full block"
             onBlur={(e) => setEmail(e.target.value)}
-            required
           />
           <textarea
             placeholder="Enter address"
             className="textarea textarea-bordered textarea-lg w-full block"
             onBlur={(e) => setAddress(e.target.value)}
-            required
           />
         </div>
 
@@ -116,26 +117,13 @@ const CheckoutForm = () => {
             <p className="font-semibold">Final Price:</p>
             <p className="text-orange-600 font-semibold">{finalPrice} BDT</p>
           </div>
-          <div className="my-5">
-            <p className="font-semibold text-center">Select Payment Option</p>
-            <div className="flex justify-around mt-5">
-              <div className="flex gap-2">
-                <input type="radio" name="radio-4" className="radio" />
-                <p>Cash On Delivery</p>
-              </div>
-              <div className="flex gap-2">
-                <input type="radio" name="radio-4" className="radio" />
-                <p>Online Payment</p>
-              </div>
-            </div>
-          </div>
           <button
             onClick={addUserDetails}
             className="btn bg-orange-600 rounded-lg border-0"
           >
             Place Order
           </button>
-
+            <p className="text-center font-semibold text-blue-600">Press on check order after placing an order</p>
           {/* The button to open modal */}
           <label htmlFor="my-modal" className="btn">
             Check Order
@@ -145,24 +133,25 @@ const CheckoutForm = () => {
           <input type="checkbox" id="my-modal" className="modal-toggle" />
           <div className="modal">
             <div className="modal-box">
-              <h3 className="font-bold text-lg">
+              <h3>
                 {users.map((u) => (
-                  <p>{u.name}</p>
+                  <>
+                    <p>
+                      Dear, <span className="text-orange-600 font-semibold">{u.name}</span> you have to pay <span className="text-orange-600 font-semibold">{finalPrice}</span> BDT.
+                      <br />
+                      Check your email <span className="text-blue-600 font-semibold">{u.email}</span> for online bill copy.
+                      <br />
+                      Product will be delivered at <span className="font-semibold">{u.address}</span>.
+                    </p>
+                  </>
                 ))}
               </h3>
-              <div className="flex justify-between">
-                <p className="font-semibold">Product</p>
-                <p className="font-semibold">Price</p>
-              </div>
               {products.map((p, i) => (
                 <div key={i} className="flex justify-between">
                   <p className="font-semibold">{p.name}</p>
                   <p className="font-semibold">{p.price} BDT</p>
                 </div>
               ))}
-              <p className="text-orange-600 font-semibold">
-                You have to pay {finalPrice} BDT
-              </p>
               <div className="modal-action">
                 <label htmlFor="my-modal" className="btn">
                   Ok
